@@ -2,16 +2,17 @@
 
 To download the redis server and client.
 
-This was done to get information from the redis database in NPME.
+This was done to get information from the Redis database from NPME.
 
 NPME uses the couch and the redis database.
-redis is where the auth tokens for users are stored.
 
-database is installed by default in  
+Redis is where the auth tokens for users are stored.
 
-# ls -l /usr/local/lib/npme/redis/
-total 396
--rw-r--r-- 1 newrelic docker 399968 Jun  5 10:25 appendonly.aof
+Database is installed by default in  
+
+    # ls -l /usr/local/lib/npme/redis/
+    total 396
+    -rw-r--r-- 1 newrelic docker 399968 Jun  5 10:25 appendonly.aof
 
 
 Installation of redis :
@@ -28,10 +29,8 @@ For those impatient : Download and install this
 
 I installed this on both the Mac and Linux server and it works.
 
-
 For exploring the redis db on NPME: Execute the redis-cli on command line
-
-This fails as the redis is not running on the default port as shown.
+   If this fails - then check the IP address and the port .
 
     redis-cli
 
@@ -52,10 +51,20 @@ Resolution :
 Notice the port is IP is 172.17.0.1
 
 
-So, start the 'redis-cli' with the IP as an argument. Notice the PONG response.
+So, start the 'redis-cli' with the IP as an argument. Notice the PONG response. This means the connection was successful.
 
     # redis-cli -h 172.17.0.1 -p 6379 ping
     PONG
 
 
-newrelic 21610 21588  0 Apr13 ?        01:13:50 redis-server *:6379   
+To get the list of databases: Run the redis-cli command line as shown and type in CONFIG get databases.
+
+    # redis-cli -h 172.17.0.1
+    172.17.0.1:6379> config get databases
+    1) "databases"
+    2) "16"
+
+To get the keys stored in redis
+    keys *
+
+    keys l*
